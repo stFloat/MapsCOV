@@ -1,0 +1,39 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.android.traffic.MapActivity" >
+
+    <item
+        android:id="@+id/map_common"
+        android:orderInCategory="100"
+        android:title="普通地图"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/map_satellite"
+        android:orderInCategory="100"
+        android:title="卫星地图"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/map_traffic"
+        android:orderInCategory="100"
+        android:title="交通地图(on)"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/map_heat"
+        android:orderInCategory="100"
+        android:title="热力图(on)"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/id_map_location"
+        android:orderInCategory="100"
+        android:title="我的位置"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/id_map_mode_common"
+        android:orderInCategory="100"
+        android:title="普通模式"
+        app:showAsAction="never" />
+
+
+</menu>

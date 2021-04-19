@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.gesture.GestureLibraries;
+import android.gesture.GestureLibrary;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
@@ -20,6 +22,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.dongwanghan.mapscov.view.ArcMenu;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +31,7 @@ import java.util.Map;
 
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
     private Context context;
+    private ArcMenu mArcMenu;
     private GridView mGridView;
     private SimpleAdapter mSimpleAdapter;
     private List<Map<String,Object>> dataList;
@@ -69,9 +74,9 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
      *
      * 手势
      */
-    private void initGesture(){
-        
-    }
+//    private void initGesture(){
+//        final GestureLibrary gestureLibrary = GestureLibraries.fromRawResource(context,R.raw.gestures);
+//    }
     private void inNetworkConnectting(){
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -133,10 +138,44 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         }
         return dataList;
     }
+//    private void initEvent(){
+//        mArcMenu.serOnMenuItemClickListener(new ArcMenu.OnMenuItemClickListener() {
+//            @Override
+//            public void onClick(View view, int pos) {
+//                Toast.makeText(MainActivity.this, pos + ":" + view.getTag(), Toast.LENGTH_SHORT).show();
+//                final Message message = new Message();
+//                switch (pos){
+//                    case 1:
+//                        new Thread(){
+//                            @Override
+//                            public void run() {
+//                                try {
+//                                    Thread.sleep(1000);
+//                                    message.what = 1;
+//                                    handler.sendMessage(message);
+//                                }catch (InterruptedException e){
+//                                    e.printStackTrace();
+//                                }
+//
+//                            }
+//                        }.start();
+//
+//                        break;
+//                }
+//            }
+//        });
+//    }
 
 
     @Override
-    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+        switch (position){
+            case 0:
+                Intent intent_map = new Intent(context,MapsActivity.class);
+                startActivity(intent_map);
+                //overridePendingTransition(R);
 
+                break;
+        }
     }
 }

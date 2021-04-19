@@ -7,14 +7,19 @@ import android.view.ViewGroup;
 
 public class ArcMenu extends ViewGroup implements View.OnClickListener {
     /*
-    * @Description: TODO
+    * @Description:
     * @author: youyu
     * @date:
     *
     
     * @Return:
     */
+    private static final int POS_LEFT_TOP = 0;
+    private static final int POS_LEFT_BOTTOM = 1;
+    private static final int POS_RIGHT_TOP = 2;
+    private static final int POS_RIGHT_BOTTOM = 3;
 
+    private OnMenuItemClickListener mMenuItemClickListener;
     /**
      *
      * 菜单主按钮
@@ -41,7 +46,9 @@ public class ArcMenu extends ViewGroup implements View.OnClickListener {
     public interface OnMenuItemClickListener{
         void onClick(View view, int pos);
     }
-
+    public void serOnMenuItemClickListener(OnMenuItemClickListener mMenuItemClickListener){
+        this.mMenuItemClickListener = mMenuItemClickListener;
+    }
     public ArcMenu(Context context) {
         super(context);
     }

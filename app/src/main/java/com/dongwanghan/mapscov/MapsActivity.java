@@ -22,6 +22,7 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
+import com.dongwanghan.mapscov.Listener.MyOrientationListener;
 
 import static android.content.ContentValues.TAG;
 
@@ -41,7 +42,8 @@ public class MapsActivity extends Activity {
 
     //图标
     private BitmapDescriptor mIconLocation;
-
+    private MyOrientationListener myOrientationListener;
+    private float mCurrentX;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -103,6 +105,7 @@ public class MapsActivity extends Activity {
             mLocationClient.start();
         }
         CenterToMyLocation();
+        //myOrientationListener.start();
     }
 
     @Override

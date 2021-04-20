@@ -36,7 +36,7 @@ public class MyOrientationListener implements SensorEventListener {
     }
     @Override
     public void onSensorChanged(SensorEvent sensorEvent) {
-        float x = sensorEvent.values(SensorManager.DATA_X);
+        float x = sensorEvent.values[0];
         if (Math.abs(x-lasrX) > 1.0){
             if (mOnOrientationListener !=null){
                 mOnOrientationListener.onOrientationChanged(x);

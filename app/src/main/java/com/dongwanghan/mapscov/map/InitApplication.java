@@ -1,4 +1,4 @@
-package com.dongwanghan.mapscov;
+package com.dongwanghan.mapscov.map;
 
 import android.app.Application;
 

@@ -1,13 +1,18 @@
-package com.dongwanghan.mapscov;
+package com.dongwanghan.mapscov.map;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -23,13 +28,15 @@ import com.baidu.mapapi.map.MyLocationConfiguration;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.dongwanghan.mapscov.Listener.MyOrientationListener;
+import com.dongwanghan.mapscov.R;
 
 import static android.content.ContentValues.TAG;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 
 public class MapsActivity extends Activity {
     private MapView mMapView; // 显示地图
-    private BaiduMap mBaiduMap; // 百度地图
+    private BaiduMap mBaiduMap; // 定位地图
 
     private Context context;
 
@@ -45,6 +52,8 @@ public class MapsActivity extends Activity {
     private MyOrientationListener myOrientationListener;
     private float mCurrentX;
 
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,10 +68,12 @@ public class MapsActivity extends Activity {
     }
     //地图显示
     private void initView(){
-        //获取地图
+        //获取地图空间引用
         mMapView = (MapView) findViewById(R.id.bmapView);
 
         mBaiduMap = mMapView.getMap();//将定位图层带入mBaiduMap
+        //开启地图定位图层
+        mBaiduMap.setMyLocationEnabled(true);
 //        MapStatusUpdate after = MapStatusUpdateFactory.zoomTo(15.0f);
 //        mBaiduMap.setMapStatus(after);
     }
@@ -96,11 +107,12 @@ public class MapsActivity extends Activity {
         mBaiduMap.animateMapStatus(mapStatusUpdate);
     }
 
+
+
     @Override
     protected void onStart() {
         super.onStart();
-        //开启地图定位图层
-        mBaiduMap.setMyLocationEnabled(true);
+
         if(!mLocationClient.isStarted()){
             mLocationClient.start();
         }
@@ -122,18 +134,19 @@ public class MapsActivity extends Activity {
         mMapView.onPause();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        //停止定位
-        mLocationClient.stop();
-        mBaiduMap.setMyLocationEnabled(false);
-
-    }
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//
+//    }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        //停止定位
+        mLocationClient.stop();
+        //关闭定位图层
+        mBaiduMap.setMyLocationEnabled(false);
         //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
         mMapView.onDestroy();
         mBaiduMap = null;
@@ -144,14 +157,14 @@ public class MapsActivity extends Activity {
      * 实现定位监听器BDLocationListener，重写onReceiveLocation方法；
      *
      */
-    public class MyLocationListener extends BDAbstractLocationListener {
+    class MyLocationListener extends BDAbstractLocationListener {
 
         @Override
         public void onReceiveLocation(BDLocation location) {
             //mapView 销毁后不在处理新接收的位置
-//            if (location == null || mMapView == null){
-//                return;
-//            }
+            if (location == null || mMapView == null){
+                return;
+            }
             MyLocationData locData = new MyLocationData.Builder()
                     .accuracy(location.getRadius())
                     // 此处设置开发者获取到的方向信息，顺时针0-360
